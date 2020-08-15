@@ -1,14 +1,15 @@
 version: '3'
+
 services:
-  databse:
-    image: 'mongo'
-    container_name: 'mongodb'
-    environment:
-      - MONGO_INITDB_DATABASE=nest-graphql-mongo
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    volumes:
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-      - /home/matheus/Dev/mongodb:/data/db
-    ports:
-      - '27017:27017'
+    databse:
+        image: 'mongo'
+        container_name: 'mongodb'
+        environment:
+            - MONGO_INITDB_DATABASE=nest
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - /home/matheus/Dev/mongodb:/data/db
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        ports:
+            - '27017:27017'

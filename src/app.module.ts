@@ -1,9 +1,7 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { join } from 'path';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { typeOrmConfig } from './configs/typeorm.config';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -12,17 +10,10 @@ import { UserModule } from './user/user.module';
       typePaths: ['./**/*.graphql'],
       playground: true
     }),
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb://teste:teste@127.0.0.1:27017/nest-graphql-mongo',
-      entities: [join(__dirname, '**/**.entity{.ts,.js}')],
-      synchronize: true,
-      useNewUrlParser: true,
-      logging: true,
-    }),
+    TypeOrmModule.forRoot(typeOrmConfig),
     UserModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
