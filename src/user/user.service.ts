@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UserInput } from './user.input';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
 import { MongoRepository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
+
+import { User } from './user.entity';
 
 @Injectable()
 export class UserService {

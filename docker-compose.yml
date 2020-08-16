@@ -1,15 +1,37 @@
 version: '3'
 
 services:
-    databse:
-        image: 'mongo'
-        container_name: 'mongodb'
+    mongo-express:
+        image: mongo-express
+        container_name: mongodb-gui
+        ports:
+            - 8081:8081
         environment:
-            - MONGO_INITDB_DATABASE=nest
+            - ME_CONFIG_BASICAUTH_USERNAME=teste
+            - ME_CONFIG_BASICAUTH_PASSWORD=teste
+            - ME_CONFIG_MONGODB_PORT=27017
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+        links:
+            - mongo
+        networks:
+            - mongo-compose-network
+
+    mongo:
+        image: mongo
+        container_name: mongodb
+        environment:
             - MONGO_INITDB_ROOT_USERNAME=root
             - MONGO_INITDB_ROOT_PASSWORD=root
+            - MONGO_INITDB_DATABASE=nest
+        ports:
+            - 27017:27017
         volumes:
             - /home/matheus/Dev/mongodb:/data/db
             - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-        ports:
-            - '27017:27017'
+        networks:
+            - mongo-compose-network
+
+networks: 
+    mongo-compose-network:
+        driver: bridge
